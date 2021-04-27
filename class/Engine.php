@@ -1,74 +1,67 @@
 <?php
 /**
- * Ïðîñòîé äâèæîê íà PHP
- * @author ox2.ru 
- */
+* ÐŸÑ€Ð¾ÑÑ‚Ð¾Ð¹ Ð´Ð²Ð¸Ð¶Ð¾Ðº Ð½Ð° PHP
+* @author Company.ru
+*/
 class Engine {
-
-    private $_page_file = null;
-    private $_error = null;
-
-    public function __construct() {
-        if (isset($_GET["page"])) { //Åñëè îòêðûòà êàêàÿ-íèáóäü ñòðàíèöà
-            //Çàïèñûâàåì â ïåðåìåííóþ èìÿ îòêðûòîãî ôàéëà (èç GET çàïðîñà)
-            $this->_page_file = $_GET["page"]; 
-            //Íåáîëüøàÿ çàùèòà
-            $this->_page_file = str_replace(".", null, $_GET["page"]);
-            $this->_page_file = str_replace("/", null, $_GET["page"]);
-            $this->_page_file = str_replace("\\", null, $_GET["page"]);
-
-             //Ïðîâåðÿåì, åñëè øàáëîí íå ñóùåñòâóåò
-            if (!file_exists("templates/" . $this->_page_file . ".php")) {
-                $this->_setError("Øàáëîí íå íàéäåí"); //Îøèáêó íà ýêðàí
-                $this->_page_file = "main"; //Îòêðûâàåì ãëàâíóþ ñòðàíèöó
-            }
-        }
-         //Åñëè â GET çàïðîñå íåò ïåðåìåííîé page, òî îòêðûâàåì ãëàâíóþ
-        else $this->_page_file = "main";
-    }
-
-    /**
-     * Çàïèñûâàåò îøèáêó â ïåðåìåííóþ _error
-     * @param string $error - òåêñò îøèáêè
-     * @author ox2.ru 
-     */
-    private function _setError($error) {
-        $this->_error = $error;
-    }
-
-    /**
-     * Âîçâðàùàåò òåêñò îøèáêè
-     * @author ox2.ru 
-     */
-    public function getError() {
-        return $this->_error;
-    }
-
-    /**
-     * Âîçâðàùàåò òåêñò îòêðûòîé ñòðàíèöû
-     */
-    public function getContentPage() {
-        return file_get_contents("templates/" . $this->_page_file . ".php");
-    }
-
-    /**
-     * Âîçâðàùàåò òåã çàãîëîâîê îòêðûòîé ñòðàíèöû
-     * @return string 
-     */
-    public function getTitle() {
-        switch ($this->_page_file) {
-            case "main":
-                return "Ãëàâíàÿ ñòðàíèöà ñàéòà ox2.ru";
-                break;
-            case "about":
-                return "Î êîìïàíèè ox2.ru";
-                break;
-            case "ox2":
-                return "Ïðåèìóùåñòâà ox2.ru";
-                break;
-            default:
-                break;
-        }
-    }
-
+private $_page_file = null;
+private $_error = null;
+public function __construct() {
+if (isset($_GET["page"])) { //Ð•ÑÐ»Ð¸ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð° ÐºÐ°ÐºÐ°Ñ-Ð½Ð¸Ð±ÑƒÐ´ÑŒ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ð°
+//Ð—Ð°Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÐ¼ Ð² Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½ÑƒÑŽ Ð¸Ð¼Ñ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¾Ð³Ð¾ Ñ„Ð°Ð¹Ð»Ð° (Ð¸Ð· GET Ð·Ð°Ð¿Ñ€Ð¾ÑÐ°)
+$this->_page_file = $_GET["page"];
+//ÐÐµÐ±Ð¾Ð»ÑŒÑˆÐ°Ñ Ð·Ð°Ñ‰Ð¸Ñ‚Ð°
+$this->_page_file = str_replace(".", null, $_GET["page"]);
+$this->_page_file = str_replace("/", null, $_GET["page"]);
+$this->_page_file = str_replace("", null, $_GET["page"]);
+//ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼, ÐµÑÐ»Ð¸ ÑˆÐ°Ð±Ð»Ð¾Ð½ Ð½Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÐµÑ‚
+if (!file_exists("templates/" . $this->_page_file . ".php")) {
+$this->_setError("Ð¨Ð°Ð±Ð»Ð¾Ð½ Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½"); //ÐžÑˆÐ¸Ð±ÐºÑƒ Ð½Ð° ÑÐºÑ€Ð°Ð½
+$this->_page_file = "main"; //ÐžÑ‚ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Ð³Ð»Ð°Ð²Ð½ÑƒÑŽ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñƒ
 }
+}
+//Ð•ÑÐ»Ð¸ Ð² GET Ð·Ð°Ð¿Ñ€Ð¾ÑÐµ Ð½ÐµÑ‚ Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½Ð¾Ð¹ page, Ñ‚Ð¾ Ð¾Ñ‚ÐºÑ€Ñ‹Ð²Ð°ÐµÐ¼ Ð³Ð»Ð°Ð²Ð½ÑƒÑŽ
+else $this->_page_file = "main";
+}
+/**
+* Ð—Ð°Ð¿Ð¸ÑÑ‹Ð²Ð°ÐµÑ‚ Ð¾ÑˆÐ¸Ð±ÐºÑƒ Ð² Ð¿ÐµÑ€ÐµÐ¼ÐµÐ½Ð½ÑƒÑŽ _error
+* @param string $error - Ñ‚ÐµÐºÑÑ‚ Ð¾ÑˆÐ¸Ð±ÐºÐ¸
+* @author Company.ru
+*/
+private function _setError($error) {
+$this->_error = $error;
+}
+/**
+* Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ‚ÐµÐºÑÑ‚ Ð¾ÑˆÐ¸Ð±ÐºÐ¸
+* @author Company.ru
+*/
+public function getError() {
+    return $this->_error;
+    }
+    /**
+    * Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ‚ÐµÐºÑÑ‚ Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¾Ð¹ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹
+    */
+    public function getContentPage() {
+    return file_get_contents("templates/" . $this->_page_file . ".php");
+    }
+    /**
+    * Ð’Ð¾Ð·Ð²Ñ€Ð°Ñ‰Ð°ÐµÑ‚ Ñ‚ÐµÐ³ Ð·Ð°Ð³Ð¾Ð»Ð¾Ð²Ð¾Ðº Ð¾Ñ‚ÐºÑ€Ñ‹Ñ‚Ð¾Ð¹ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ñ‹
+    * @return string
+    */
+    public function getTitle() {
+    switch ($this->_page_file) {
+    case "main":
+    return "Ð“Ð»Ð°Ð²Ð½Ð°Ñ ÑÑ‚Ñ€Ð°Ð½Ð¸Ñ†Ð° ÑÐ°Ð¹Ñ‚Ð° Company.ru";
+    break;
+    case "about":
+    return "Ðž ÐºÐ¾Ð¼Ð¿Ð°Ð½Ð¸Ð¸ Company.ru";
+    break;
+    case "Company":
+    return "ÐŸÑ€ÐµÐ¸Ð¼ÑƒÑ‰ÐµÑÑ‚Ð²Ð° Company.ru";
+    break;
+    default:
+    break;
+    }
+    }
+    }
+    ?>
