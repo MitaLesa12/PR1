@@ -1,3 +1,7 @@
+<?php
+session_start();
+$_SESSION["test"] = "Сессия - тест";
+?>
 <?
 include_once "class/Engine.php"; //Подключаем класс-движка
 echo '<nav class="menu">';
