@@ -1,5 +1,6 @@
 <html>
 <head>
+<link rel="stylesheet" type="text/css" href="css/main.css">
 <?php global $engine; ?>
 <title><?php $engine->getTitle(); ?></title>
 </head>
